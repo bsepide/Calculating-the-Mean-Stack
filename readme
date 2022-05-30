@@ -1,0 +1,107 @@
+# Calculating-the-Mean-Stack
+Let's start with a program to calculate the mean of a set of numbers stored in a Python list.
+
+The mean function in the Python statistics module works like this:
+
+ 
+from statistics import mean
+
+fluxes = [23.3, 42.1, 2.0, -3.2, 55.6]
+
+m = mean(fluxes)
+
+print(m)
+
+23.96
+
+or we could calculate the mean manually:
+ 
+fluxes = [23.3, 42.1, 2.0, -3.2, 55.6]
+
+m = sum(fluxes)/len(fluxes)
+
+print(m)
+
+using the built-in sum and len functions.
+
+Use the standard library function (e.g. mean) if it exists rather than implementing your own, unless there is a good reason not to.
+
+One good reason (at least temporarily) is learning!
+
+We'll start with an easy question to check everything is working.
+
+Write a function calculate_mean that calculates the mean of a list of numbers. Your function should take a single argument, the list of floats, and return the mean of that list
+
+def calculate_mean(data):
+
+  mean = sum(data)/len(data)
+  
+  return mean
+
+Python lists are very flexible, but they are slow for big calculations.
+
+NumPy arrays can store purely numerical data in much less space, and are much simpler and faster for calculations.
+
+We can calculate the mean with a NumPy array instead of a list:
+
+ 
+import numpy as np
+
+fluxes = np.array([23.3, 42.1, 2.0, -3.2, 55.6])
+
+m = np.mean(fluxes)
+
+print(m)
+
+You should get the same answer as you did before. This may not look simpler yet, but it will in the future.
+
+NumPy has a great range of numerical functions. For example, to calculate the size of an array, and the standard deviation:
+
+ 
+import numpy as np
+fluxes = np.array([23.3, 42.1, 2.0, -3.2, 55.6])
+print(np.size(fluxes)) # length of array
+print(np.std(fluxes))  # standard deviation
+The NumPy website has a full list of functions.
+
+
+#The program loops over each line in the file, splitting the row into a list of values, and appending each row to data:
+
+data = []
+
+for line in open('data.csv'):
+
+  data.append(line.strip().split(','))
+  
+print(data)
+
+#The strip method removes whitespace (including the newline) from the ends of line. 
+#The split method creates a list of strings using the ',' character as the separator between items.
+#Now we can store the data in lists, we need to convert each item from a string to a float. We could do this using nested for loops:
+data = []
+for line in open('data.csv'):
+  row = []
+  for col in line.strip().split(','):
+    row.append(float(col))
+  data.append(row)
+
+print(data)
+#NumPy has a simpler asarray function to do this conversion:
+import numpy as np
+
+data = []
+for line in open('data.csv'):
+  data.append(line.strip().split(','))
+
+data = np.asarray(data, float)
+print(data)
+#The NumPy loadtxt function can automatically read a CSV file into a NumPy array, including converting from string to numbers.
+
+#Using our example file from the previous slide:
+#Reading and converting to floats becomes a single statement:
+
+ 
+import numpy as np
+data = np.loadtxt('data.csv', delimiter=',')
+print(data)
+#The NumPy loadtxt function is simpler, faster, and less error-prone than our previous solution. Use it!
